@@ -33,20 +33,21 @@ for i in range(0,len(data),3):
     print("x2,y2",x2,y2)
     print("x_prize,y_prize",x_prize,y_prize)
 
-    upper_limit_x1 = x_prize//x1
-    upper_limit_y1 = y_prize//y1
+    upper_limit_x1 = x_prize//x1 + 1
+    upper_limit_y1 = y_prize//y1 + 1
 
-    upper_limit_x2 = x_prize//x2
-    upper_limit_y2 = y_prize//y2
+    upper_limit_x2 = x_prize//x2 + 1
+    upper_limit_y2 = y_prize//y2 + 1
 
     combinations = []
 
-    for b1 in range(0,max(upper_limit_x1, upper_limit_y1)):
-        for b2 in range(0,max(upper_limit_x2, upper_limit_y2)):
+    for b1 in range(0,min(upper_limit_x1, upper_limit_y1)):
+        for b2 in range(0,min(upper_limit_x2, upper_limit_y2)):
             x , y = ( (x1*b1) + (x2*b2) ) , ( (y1*b1) + (y2*b2) )
             if x == x_prize and y == y_prize:
                 combinations.append( (( b1*3 )+ ( b2*1 ), b1, b2) )
-    
+            if x > x_prize or y > y_prize:
+                break
     combinations.sort()
     if len(combinations)>0:
         print("Minimized: ", combinations[0])
