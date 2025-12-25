@@ -5,6 +5,8 @@ WIDTH = 101
 
 SECONDS = 100
 
+
+
 with open('input.txt') as f:
     robots = f.read().strip()
 
@@ -24,7 +26,7 @@ for r in robots:
 
     print(r)
     print(pos_r,pos_c,vel_r,vel_c)
-    p_v.append( ( (pos_r,pos_c) , (vel_r, vel_c) ) )
+    p_v.append( [ [pos_r,pos_c] , (vel_r, vel_c) ] )
 
 
 matrix = []
@@ -40,6 +42,21 @@ def print_matrix(matrix):
         print(l)
 
 print_matrix(matrix)
+
+
+
+def check_tree(matrix):
+    left =  0
+    right =  WIDTH - 1
+
+    for r in range(HEIGHT-1,-1,-1):
+        for c in range(left, right+1):
+            if matrix[r][c] != 1:
+                print("False",r,c)
+                return False
+        left+=1
+        right-=1
+    return True
 
 
 for pos , vel in p_v:
@@ -63,6 +80,7 @@ print_matrix(matrix)
 # quadrants:
 q_height = ( HEIGHT-1 ) // 2
 q_width = ( WIDTH-1 ) // 2
+
 
 
 q1, q2, q3, q4 = 0,0,0,0
