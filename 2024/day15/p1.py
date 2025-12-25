@@ -59,6 +59,4 @@ while len(points_tracked) >0:
     points_tracked = next_points
     
 
-
-
 print("Result", matrix[WIDTH-1][WIDTH-1])
