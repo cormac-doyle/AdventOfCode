@@ -6,9 +6,6 @@ with open('input.txt') as f:
     for l in f:
         matrix.append(l.strip())
 
-# for l in matrix:
-#     print(l)
-
 seen = set()
 
 row_range = range(len(matrix))
@@ -29,12 +26,13 @@ def check_area(curr_char, curr_pos, area_and_perimeter, already_seen, prev_direc
     
     if curr_pos in already_seen:
         return
-    
     already_seen.add(curr_pos)
-    area_and_perimeter[0]+=1
+
+    area_and_perimeter[0] += 1
     
     for dr, dc in directions:
         check_area(curr_char, (curr_pos[0]+dr, curr_pos[1]+dc),area_and_perimeter, already_seen, (dr,dc),sides_map)
+
 
 
 def process_sides(sides_map):
