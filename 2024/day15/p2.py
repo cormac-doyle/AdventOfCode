@@ -10,6 +10,7 @@ WIDTH = int(data[0])
 BYTES = int(data[1])
 
 BIG_NUMBER = 9999
+INVALID_POS = -1
 data = data[2:]
 
 matrix = []
@@ -39,7 +40,7 @@ def dijkstra(matrix):
             for r,c in points_tracked:
                 next_r = r + dr
                 next_c = c + dc
-                if next_r in valid_range and next_c in valid_range and matrix[next_r][next_c] != '#' and matrix[next_r][next_c] > steps:
+                if next_r in valid_range and next_c in valid_range and matrix[next_r][next_c] == BIG_NUMBER:
                     matrix[next_r][next_c] = steps
                     next_points.append( (next_r, next_c) )
     
@@ -55,7 +56,7 @@ for i in range(len(data)):
     row = int(points[1])
     col = int(points[0])
     
-    matrix[row][col] = '#'
+    matrix[row][col] = INVALID_POS
 
     temp_matrix = copy.deepcopy(matrix)
     if dijkstra(temp_matrix) is False:
