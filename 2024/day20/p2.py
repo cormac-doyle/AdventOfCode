@@ -63,6 +63,8 @@ while curr_pos != end:
             length+=1
             matrix_copy[next_pos[0]][next_pos[1]] = length
             curr_pos = next_pos
+            
+race_track.append(curr_pos)
 
 for l in matrix_copy:
     print(l)
@@ -71,34 +73,24 @@ for l in matrix_copy:
 print("Length", length)
 
 
-cheats_map = defaultdict(int)
 
-cheat_directions = [
-    (0,2),
-    (0,-2),
-    (2,0),
-    (-2,0)
-]
+def find_dist(r1,c1,r2,c2):
+    return abs(r1-r2) + abs(c1-c2)
 
-for pos in race_track:
-    for d in cheat_directions:
-        next_r = pos[0] + d[0]
-        next_c = pos[1] + d[1]
-        if next_r in row_range and next_c in col_range:
-            if matrix_copy[next_r][next_c] != '#':
-                # Found a valid race track point
-                if matrix_copy[next_r][next_c] > matrix_copy[pos[0]][pos[1]]:
-                    time_saved = matrix_copy[next_r][next_c] - matrix_copy[pos[0]][pos[1]] - 2
-                    cheats_map[time_saved] +=1
-
-
-keys = sorted(cheats_map.keys())
-# print(keys)
+CHEAT_TIME = 20
 
 result = 0
-for key in keys:
-    if key >= 100:
-        result+=cheats_map[key]
-        # print("There are ", cheats_map[key],"cheats that save ", key, "seconds")
+for pos_idx in range(len(race_track)):
+    pos = race_track[pos_idx]
+    for next_pos in race_track[pos_idx:]:
+        
+        distnace = find_dist(pos[0],pos[1],next_pos[0],next_pos[1])
+        if distnace <= CHEAT_TIME:
+            time_saved = matrix_copy[next_pos[0]][next_pos[1]] - matrix_copy[pos[0]][pos[1]] - distnace
+            if time_saved >= 100:
+                result+=1
+
 
 print("Result", result)
+
+
