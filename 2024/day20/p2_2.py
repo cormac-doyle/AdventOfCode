@@ -72,21 +72,33 @@ for l in matrix_copy:
 
 print("Length", length)
 
+
+cheats_map = defaultdict(int)
+
 def find_dist(r1,c1,r2,c2):
     return abs(r1-r2) + abs(c1-c2)
 
 CHEAT_TIME = 20
-
 result = 0
+
 for pos_idx in range(len(race_track)):
-    pos = race_track[pos_idx]
-    for next_pos in race_track[pos_idx:]:
-        
-        distnace = find_dist(pos[0],pos[1],next_pos[0],next_pos[1])
-        if distnace <= CHEAT_TIME:
-            time_saved = matrix_copy[next_pos[0]][next_pos[1]] - matrix_copy[pos[0]][pos[1]] - distnace
-            if time_saved >= 100:
-                result+=1
+    r1, c1 = race_track[pos_idx]
+    t1 = matrix_copy[r1][c1]
+    
+    for dr in range(-CHEAT_TIME, CHEAT_TIME + 1):
+        for dc in range(-(CHEAT_TIME - abs(dr)), (CHEAT_TIME - abs(dr)) + 1):
+            r2, c2 = r1 + dr, c1 + dc
+            
+            if 0 <= r2 < len(matrix) and 0 <= c2 < len(matrix[0]):
+                val_at_pos = matrix_copy[r2][c2]
+                
+                if val_at_pos != '#':
+                    t2 = val_at_pos
+                    dist = abs(dr) + abs(dc)
+                    
+                    time_saved = t2 - t1 - dist
+                    if time_saved >= 100:
+                        result += 1
 
 
 print("Result", result)
